@@ -1,0 +1,12 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static HTML frontend",
+  "scripts": {
+    "dev": "serve -l 5500 ."
+  },
+  "devDependencies": {
+    "serve": "^14.2.6"
+  }
+}

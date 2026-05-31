@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>התחברות</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #7a92ff 0%, #7068ff 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .login-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 400px;
+    
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      color: #1a1a2e;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .subtitle {
+      color: #666;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 0.85rem;
+      margin-top: 0.5rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .btn-login:hover {
+      opacity: 0.9;
+    }
+
+    .links {
+      margin-top: 1.5rem;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .links a {
+      color: #667eea;
+      text-decoration: none;
+    }
+
+    .links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-card">
+
+    
+
+
+    <h1>התחברות</h1>
+    <p class="subtitle">הזן את פרטי החשבון שלך</p>
+
+    <form id="loginForm" action="#" method="post">
+      <div class="form-group">
+        <label for="email">אימייל</label>
+        <input type="email" id="email" name="email" placeholder="name@example.com" required autocomplete="email">
+      </div>
+
+      <div class="form-group">
+        <label for="password">סיסמה</label>
+        <input type="password" id="password" name="password" placeholder="הזן סיסמה" required autocomplete="current-password">
+      </div>
+
+      <button type="submit" class="btn-login">התחבר</button>
+    </form>
+
+    <div class="links">
+      <a>שכחת סיסמה?</a>
+    </div>
+
+
+    <div class="links">
+      <a href="./register.html">אין לכם חשבון? הרשמו כאן!</a>
+    </div>
+    
+  </div>
+
+  <script>
+    const API_BASE = 'http://127.0.0.1:3000';
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      try {
+        const res = await fetch(`${API_BASE}/api/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          alert(data.message || 'שגיאה בהתחברות');
+          return;
+        }
+
+        alert('התחברת בהצלחה');
+      } catch {
+        alert('לא ניתן להתחבר לשרת. ודאו שהשרת פועל.');
+      }
+    });
+  </script>
+</body>
+</html>
