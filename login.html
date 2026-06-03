@@ -107,14 +107,57 @@
     .links a:hover {
       text-decoration: underline;
     }
+
+    .loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #ddd;
+  border-top: 5px solid #667eea;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loading-overlay p {
+  margin-top: 15px;
+  font-weight: 600;
+  color: #333;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
   </style>
 </head>
 <body>
 
+  
+
+  <div id="loadingOverlay" class="loading-overlay" style="display:none;">
+    <div class="spinner"></div>
+    <p>מתחבר...</p>
+  </div>
+
+
   <div class="login-card">
-
-    
-
 
     <h1>התחברות</h1>
     <p class="subtitle">הזן את פרטי החשבון שלך</p>
@@ -141,10 +184,14 @@
   </div>
 
   <script>
-    const API_BASE = 'http://127.0.0.1:3000';
+    const API_BASE = 'https://backend-fullstack-test-project.onrender.com';
+
+    const loadingOverlay = document.getElementById('loadingOverlay');
 
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+
+    loadingOverlay.style.display = 'flex';
 
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
@@ -167,6 +214,8 @@
       } catch {
         alert('לא ניתן להתחבר לשרת. ודאו שהשרת פועל.');
       }
+
+      loadingOverlay.style.display = 'none';
     });
   </script>
 </body>
